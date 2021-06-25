@@ -190,7 +190,7 @@
               if (status === 404) console.log(`\n${status}: ${data}`)
           })
 
-      request("mateus lindão")
+      request("mateus")
           .then(e => {
               const { data } = e
               console.log(`\nMaiúsculo: ${data}`)
