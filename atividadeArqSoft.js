@@ -110,15 +110,79 @@ console.log’s informando o nó raiz e seus filhos e quais os tipos de cada
 nó (nó ou nó folha). Use conceitos de OO tais como herança.*/
 
 class Folha {
-
+    constructor(valor) {
+        this.valor = valor
+    }
 }
 
-class No {
-
+class No extends Folha {
+    constructor(valor) {
+        super(valor)
+        this.direita
+        this.esquerda
+    }
 }
 
 // A classe “Arvore” deve ser responsável por criar o nó raiz e
 // deve conter o método que cria os nós folha
-class Arvore {
+class Arvore extends No {
+    constructor(raiz) {
+        super(raiz)
+        this.esquerda = null
+        this.direita = null
+    }
 
+    // método criar no folha, 1 a direita e outro a esquerda
+    // maior número informado à direita do nó raiz e o menor número informado à esquerda.
+    // recebe lista de números
+    inserirNovoNo(valor) {
+        var filho = new No(valor)
+        this.inserirNo(this, filho)
+    }
+
+    inserirNo(pai, filho) {
+        if (filho.valor < pai.valor) {
+            if (pai.esquerda == null) {
+                pai.esquerda = filho
+            } else {
+                this.inserirNo(pai.esquerda, filho)
+            }
+        } else {
+            if (pai.direita == null) {
+                pai.direita = filho
+            } else {
+                this.inserirNo(pai.direita, filho)
+            }
+        }
+    }
+
+    // verificar tipo dos nos de toda a árvore
+    verificarArvore() {
+        console.log("\n" + this.valor + " => Nó raiz")
+        this.verificarNo(this.direita)
+        this.verificarNo(this.esquerda)
+    }
+
+    // verifica tipo do nó
+    verificarNo(no) {
+        if ((no.direita == null || no.direita == undefined) && (no.esquerda == null || no.esquerda == undefined)) {
+            console.log(no.valor + " => Nó folha")
+        } else {
+            console.log(no.valor + " => Nó Interno")
+            if (no.direita != null) {
+                this.verificarNo(no.direita)
+            }
+            if (no.esquerda != null) {
+                this.verificarNo(no.esquerda)
+            }
+        }
+    }
 }
+
+var valores = [3, 6, 7, 9, 13, 2, 8, 1, 14]
+
+
+var tree = new Arvore(5)
+valores.forEach((e) => tree.inserirNovoNo(e))
+console.log(JSON.stringify(tree, null, 2))
+tree.verificarArvore()
